@@ -1,15 +1,21 @@
 package newgame
 
 import (
+	"encoding/json"
 	"learngo/httpgordle/internal/api"
+	"log"
 	"net/http"
 )
 
 func Handle(w http.ResponseWriter, req *http.Request) {
-	if req.Method != api.NewGameMethod {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		return
-	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	_, _ = w.Write([]byte("Creating a new game"))
+
+	apiGame := api.GameResponse{}
+	err := json.NewEncoder(w).Encode(apiGame)
+	if err != nil {
+		// The header has already been set.
+		// Nothing else we can do here.
+		log.Printf("failed to write response: %s", err)
+	}
 }
