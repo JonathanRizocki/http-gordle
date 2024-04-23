@@ -5,6 +5,9 @@ import "net/http"
 const (
 	NewGameRoute  = "/games"
 	NewGameMethod = http.MethodPost
+
+	GameID         = "id"
+	GetStatusRoute = "/games/{" + GameID + "}"
 )
 
 // GameResponse contains the information about a game.
