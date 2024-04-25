@@ -3,6 +3,7 @@ package getstatus
 import (
 	"encoding/json"
 	"learngo/httpgordle/internal/api"
+	"learngo/httpgordle/internal/session"
 	"log"
 	"net/http"
 
@@ -16,11 +17,11 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "missing the id of the game", http.StatusBadRequest)
 		return
 	}
-	log.Printf("retrive status of game with id: %v", id)
 
-	apiGame := api.GameResponse{
-		ID: id,
-	}
+	game := getGame(id)
+
+	apiGame := api.ToGameResponse(game)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
@@ -31,4 +32,10 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		log.Printf("failed to write response: %s", err)
 	}
 
+}
+
+func getGame(id string) session.Game {
+	return session.Game{
+		ID: session.GameID(id),
+	}
 }
