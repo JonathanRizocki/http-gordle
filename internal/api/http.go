@@ -8,6 +8,8 @@ const (
 
 	GameID         = "id"
 	GetStatusRoute = "/games/{" + GameID + "}"
+
+	GuessRoute = "/games/{" + GameID + "}"
 )
 
 // GameResponse contains the information about a game.

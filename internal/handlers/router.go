@@ -3,6 +3,7 @@ package handlers
 import (
 	"learngo/httpgordle/internal/api"
 	"learngo/httpgordle/internal/handlers/getstatus"
+	"learngo/httpgordle/internal/handlers/guess"
 	"learngo/httpgordle/internal/handlers/newgame"
 
 	"github.com/go-chi/chi/v5"
@@ -18,6 +19,7 @@ func NewRouter() chi.Router {
 
 	r.Post(api.NewGameRoute, newgame.Handle)
 	r.Get(api.GetStatusRoute, getstatus.Handle)
+	r.Put(api.GuessRoute, guess.Handle)
 
 	return r
 }
