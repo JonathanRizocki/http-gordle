@@ -3,6 +3,7 @@ package guess
 import (
 	"encoding/json"
 	"learngo/httpgordle/internal/api"
+	"learngo/httpgordle/internal/session"
 	"log"
 	"net/http"
 
@@ -24,9 +25,12 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	apiGame := api.GameResponse{
-		ID: id,
+	game, err := guess(id, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
+	apiGame := api.ToGameResponse(game)
 
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(apiGame)
@@ -34,4 +38,10 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		// The header has already been set. Nothing much we can do here.
 		log.Printf("failed to write response: %s", err)
 	}
+}
+
+func guess(id string, r api.Guess) (session.Game, error) {
+	return session.Game{
+		ID: session.GameID(id),
+	}, nil
 }

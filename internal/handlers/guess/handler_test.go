@@ -30,7 +30,7 @@ func TestHandle(t *testing.T) {
 	Handle(recorder, req)
 
 	assert.Equal(t, http.StatusOK, recorder.Code)
-	wantedJson := `{"id":"123456","attempts_left":0,"guesses":null,"word_length":0,"status":""}`
+	wantedJson := `{"id":"123456","attempts_left":0,"guesses":[],"word_length":0,"status":""}`
 	fmt.Printf("\nrecorder body %v\n", recorder.Body.String())
 	assert.JSONEq(t, wantedJson, recorder.Body.String())
 }
