@@ -1,0 +1,18 @@
+package repository
+
+// Error is used to define sentinel errors.
+type Error string
+
+// Error implements the error interface
+func (r Error) Error() string {
+	return string(r)
+}
+
+const (
+	// ErrNotFound is returned when a game doesn't exist in the repository
+	ErrNotFound = Error("game not found in repository")
+	// ErrConflictingId is returned when a game would be created with the same ID as an existing game.
+	ErrConflictingId = Error("cannot create game with already-existing ID")
+	// ErrGameNotActive is returned when updating a game that is over
+	ErrGameNotActive = Error("cannot modify game that is over")
+)
