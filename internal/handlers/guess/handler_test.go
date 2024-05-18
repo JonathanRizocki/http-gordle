@@ -15,6 +15,7 @@ import (
 )
 
 func TestHandle(t *testing.T) {
+	handle := Handler(nil)
 
 	body := strings.NewReader(`{"word":"hello"}`)
 	req, err := http.NewRequest(http.MethodPut, api.GuessRoute, body)
@@ -27,7 +28,7 @@ func TestHandle(t *testing.T) {
 
 	recorder := httptest.NewRecorder()
 
-	Handle(recorder, req)
+	handle(recorder, req)
 
 	assert.Equal(t, http.StatusOK, recorder.Code)
 	wantedJson := `{"id":"123456","attempts_left":0,"guesses":[],"word_length":0,"status":""}`

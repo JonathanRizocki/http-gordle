@@ -13,6 +13,8 @@ import (
 )
 
 func TestHandle(t *testing.T) {
+	handle := Handler(nil)
+
 	req, err := http.NewRequest(http.MethodPost, "/games/", nil)
 	require.NoError(t, err)
 
@@ -23,7 +25,7 @@ func TestHandle(t *testing.T) {
 
 	recorder := httptest.NewRecorder()
 
-	Handle(recorder, req)
+	handle(recorder, req)
 
 	assert.Equal(t, http.StatusOK, recorder.Code)
 	wantedJson := `{"id":"123456","attempts_left":0,"guesses":[],"word_length":0,"status":""}`

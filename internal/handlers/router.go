@@ -5,6 +5,7 @@ import (
 	"learngo/httpgordle/internal/handlers/getstatus"
 	"learngo/httpgordle/internal/handlers/guess"
 	"learngo/httpgordle/internal/handlers/newgame"
+	"learngo/httpgordle/internal/repository"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -14,12 +15,12 @@ import (
 // - Create a new game;
 //
 // The provided router is ready to serve
-func NewRouter() chi.Router {
+func NewRouter(db *repository.GameRepository) chi.Router {
 	r := chi.NewRouter()
 
-	r.Post(api.NewGameRoute, newgame.Handle)
-	r.Get(api.GetStatusRoute, getstatus.Handle)
-	r.Put(api.GuessRoute, guess.Handle)
+	r.Post(api.NewGameRoute, newgame.Handler(db))
+	r.Get(api.GetStatusRoute, getstatus.Handler(db))
+	r.Put(api.GuessRoute, guess.Handler(db))
 
 	return r
 }
