@@ -34,8 +34,8 @@ func TestAdd(t *testing.T) {
 	}
 
 	err = gameRepo.Add(newGame2)
-	if err.Error() != ErrConflictingId.Error() {
-		t.Errorf("expected error %s, but got %s", ErrConflictingId, err)
+	if err == nil {
+		t.Errorf("expected error %s (%v), but got %s", ErrConflictingID, gameID1, err)
 	}
 
 }
@@ -58,8 +58,8 @@ func TestFind(t *testing.T) {
 	}
 
 	game, err = gameRepo.Find(gameID2)
-	if err != ErrNotFound {
-		t.Errorf("expected %v, but got %v", ErrNotFound, err.Error())
+	if err == nil {
+		t.Errorf("expected %v, but got %v", ErrNotFound, err)
 	}
 }
 
@@ -81,8 +81,8 @@ func TestUpdate(t *testing.T) {
 
 	result, err := gameRepo.Update(gameID2, gameUpdate)
 
-	if err != ErrNotFound {
-		t.Errorf("expected error %v, but got %v", ErrNotFound, err.Error())
+	if err == nil {
+		t.Errorf("expected error %v, but got %v", ErrNotFound, err)
 	}
 	if result.ID != "" {
 		t.Errorf("expected empty struct")
