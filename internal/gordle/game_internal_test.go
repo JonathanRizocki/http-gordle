@@ -2,9 +2,8 @@ package gordle
 
 import (
 	"errors"
+	"slices"
 	"testing"
-
-	"golang.org/x/exp/slices"
 )
 
 func TestGameValidateGuess(t *testing.T) {
