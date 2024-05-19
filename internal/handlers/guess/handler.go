@@ -12,11 +12,11 @@ import (
 
 type gameGuesser interface {
 	Find(session.GameID) (session.Game, error)
-	Update(game session.Game) error
+	Update(session.GameID, session.Game) (session.Game, error)
 }
 
 // Handler returns the handler for the guess endpoint.
-func Handler(gameGuesser) http.HandlerFunc {
+func Handler(db gameGuesser) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		id := chi.URLParam(req, api.GameID)
 
